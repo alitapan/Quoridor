@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.quoridor.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -24,6 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,6 +33,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
 import java.util.List;
+
+
 
 public class QuoridorWindow extends JFrame {
 
@@ -101,47 +105,143 @@ public class QuoridorWindow extends JFrame {
 	public QuoridorWindow() {
 
 		setResizable(false);
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 90, 790, 611); // New dimensions
+		setBounds(0, 0, 1024, 683); // New dimensions
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(1, 1, 1, 1));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
-
-		// JPanel titleScreenPanel = new JPanel();
-		// titleScreenPanel.setBackground(new Color(255, 255, 0));
-
-		ImagePanel titleScreenPanel = new ImagePanel(new ImageIcon("src/main/resources/quoridor.png").getImage());
+		
+		
+		
+//**
+//****
+//**********
+//*************************--------------------------------*************************//		
+//*************************           TITLE PANEL          *************************//
+//*************************--------------------------------*************************//			
+//**********	
+//****	
+//**
+		
+		JButton newGameButton = new JButton("New Game");
+		JButton quitGameButton = new JButton("Quit Quoridor");
+		JButton loadGameButton = new JButton("Load Game");
+		JPanel titleScreenPanel = new JPanel();
+		JPanel topPanel = new JPanel();
 		contentPane.add(titleScreenPanel, "titleScreenPanel");
+		
+		titleScreenPanel.setBackground(Color.BLACK);
+		topPanel.setBackground(new Color(41, 54, 63));
+		topPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
 		SpringLayout sl_titleScreenPanel = new SpringLayout();
 		titleScreenPanel.setLayout(sl_titleScreenPanel);
+		
+		BufferedImage metalBorder;
+		try {
+			metalBorder = ImageIO.read(new File("src/main/resources/metal.jpg"));
+			JLabel borderLabel = new JLabel(new ImageIcon(metalBorder));
+			titleScreenPanel.add(borderLabel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, borderLabel, 308, SpringLayout.NORTH, titleScreenPanel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.WEST, borderLabel, -100, SpringLayout.WEST, titleScreenPanel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, borderLabel,-346, SpringLayout.SOUTH, titleScreenPanel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.EAST, borderLabel, 100, SpringLayout.EAST, titleScreenPanel);
+			
+		} catch (IOException e2) {
+			System.out.println("Error Loading Title Screen: Cannot find item!");
+		}
+	
+		BufferedImage title;
+		try {
+			title = ImageIO.read(new File("src/main/resources/title.png"));
+			JLabel titleLabel = new JLabel(new ImageIcon(title));
+			titleScreenPanel.add(titleLabel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, titleLabel, 108, SpringLayout.NORTH, titleScreenPanel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.WEST, titleLabel, 115, SpringLayout.WEST, titleScreenPanel);
+			sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, titleLabel,-346, SpringLayout.SOUTH, titleScreenPanel);
 
-		JButton newGameButton = new JButton("New Game");
-		newGameButton.setBackground(new Color(255, 0, 255));
+		} catch (IOException e2) {
+			System.out.println("Error Loading Title Screen: Cannot find item!");
+		}
+								
+								
+		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, topPanel, -10, SpringLayout.NORTH, titleScreenPanel);
+		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, topPanel, -100, SpringLayout.WEST, titleScreenPanel);
+		sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, topPanel, -84, SpringLayout.NORTH, newGameButton);
+		sl_titleScreenPanel.putConstraint(SpringLayout.EAST, topPanel, 100, SpringLayout.EAST, titleScreenPanel);
+								
+		titleScreenPanel.add(topPanel);
+								
+										
+		//************************************************// 
+		//*************    New Game Button   *************//
+		//************************************************// 
+		
+		//Visual Configurations
+		newGameButton.setBackground(new Color(255, 255, 255));
+		newGameButton.setForeground(new Color(41, 54, 63));
+		newGameButton.setOpaque(true);
+		newGameButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		newGameButton.setPreferredSize(new Dimension(400, 40));
+		newGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		
+		//Location Configurations
+		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, newGameButton, 400, SpringLayout.NORTH, titleScreenPanel);
+		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, newGameButton, 330, SpringLayout.WEST, titleScreenPanel);
+		
+		//Hover Action
+		newGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				newGameButton.setBackground(new Color(199, 205, 214));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				newGameButton.setBackground(new Color(255, 255, 255));
+			}
+		});
+				
+		//Click Action
 		newGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout layout = (CardLayout) (contentPane.getLayout());
 				layout.show(contentPane, "setupPanel");
 			}
 		});
-
-		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, newGameButton, 185, SpringLayout.NORTH, titleScreenPanel);
-		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, newGameButton, 350, SpringLayout.WEST, titleScreenPanel);
-		newGameButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		
+		//Add Button
 		titleScreenPanel.add(newGameButton);
-
-		JButton loadGameButton = new JButton("Load Game");
-		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, loadGameButton, 230, SpringLayout.NORTH,
-				titleScreenPanel);
-		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, loadGameButton, 350, SpringLayout.WEST, titleScreenPanel);
-		// sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, loadGameButton, -124,
-		// SpringLayout.SOUTH, titleScreenPanel);
-		// sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, newGameButton, -6,
-		// SpringLayout.NORTH, loadGameButton);
-		// sl_titleScreenPanel.putConstraint(SpringLayout.EAST, newGameButton, 0,
-		// SpringLayout.EAST, loadGameButton);
-		loadGameButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+						
+								
+		//*************************************************// 
+		//*************    Load Game Button  **************//
+		//*************************************************// 
+		
+		
+		//Visual Configurations
+		loadGameButton.setBackground(new Color(255, 255, 255));
+		loadGameButton.setForeground(new Color(41, 54, 63));
+		loadGameButton.setOpaque(true);
+		loadGameButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		loadGameButton.setPreferredSize(new Dimension(400, 40));
+		loadGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		
+		//Location Configurations
+		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, loadGameButton, 450, SpringLayout.NORTH,titleScreenPanel);
+		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, loadGameButton, 330, SpringLayout.WEST, titleScreenPanel);
+		
+		//Hover Action
+		loadGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				loadGameButton.setBackground(new Color(199, 205, 214));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				loadGameButton.setBackground(new Color(255, 255, 255));
+			}
+		});
+		
+		//Click Action
 		loadGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent a) {
 				boolean wrong = false;
@@ -153,83 +253,108 @@ public class QuoridorWindow extends JFrame {
 					try {
 						Controller.startNewGame();
 						Controller.initBlackPlayer("Black");
-						Controller.initWhitePlayer("White");
-						Controller.setTotalThinkingTime("00:03:00");
-						Controller.startClock();
-						Controller.createBoard();
-						Controller.initializeBoard();
-						Controller.loadGame(selectedFile.getName());
-					} catch (UnsupportedOperationException e) {
-						JFrame f = new JFrame();
-						JTextField tf1;
-						JButton b1;
-						tf1 = new JTextField();
-						tf1.setText("Cannot load game due to invalid position");
-						tf1.setEditable(false);
-						b1 = new JButton("OK");
-						tf1.setBounds(50, 100, 350, 50);
-						b1.setBounds(100, 200, 100, 50);
-						f.getContentPane().add(tf1);
-						f.getContentPane().add(b1);
-						f.setSize(400, 400);
-						f.getContentPane().setLayout(null);
-						f.setVisible(true);
-						b1.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent b) {
-								f.setVisible(false);
-							}
-						});
-						wrong = true;
-						e.printStackTrace();
+				Controller.initWhitePlayer("White");
+				Controller.setTotalThinkingTime("00:03:00");
+				Controller.startClock();
+				Controller.createBoard();
+				Controller.initializeBoard();
+				Controller.loadGame(selectedFile.getName());
+			} catch (UnsupportedOperationException e) {
+				JFrame f = new JFrame();
+				JTextField tf1;
+				JButton b1;
+				tf1 = new JTextField();
+				tf1.setText("Cannot load game due to invalid position");
+				tf1.setEditable(false);
+				b1 = new JButton("OK");
+				tf1.setBounds(50, 100, 350, 50);
+				b1.setBounds(100, 200, 100, 50);
+				f.getContentPane().add(tf1);
+				f.getContentPane().add(b1);
+				f.setSize(400, 400);
+				f.getContentPane().setLayout(null);
+				f.setVisible(true);
+				b1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent b) {
+						f.setVisible(false);
 					}
-				}else if(returnValue == JFileChooser.CANCEL_OPTION) {
-					wrong =true;
-					Quoridor quoridor = QuoridorApplication.getQuoridor();
-					quoridor.delete();
-					quoridor = new Quoridor();
-				}
-				if (!wrong) {
-					Quoridor quoridor = QuoridorApplication.getQuoridor();
-					for (int i = 0; i < quoridor.getCurrentGame().getCurrentPosition()
-							.numberOfBlackWallsOnBoard(); i++) {
-						WallMove move = quoridor.getCurrentGame().getCurrentPosition().getBlackWallsOnBoard(i)
-								.getMove();
-						QuoridorApplication.quoridorWindow.displayWall(move.getTargetTile().getRow() -1,
-								move.getTargetTile().getColumn() -1, move.getWallDirection());
-					}
-					for (int i = 0; i < quoridor.getCurrentGame().getCurrentPosition()
-							.numberOfWhiteWallsOnBoard(); i++) {
-						WallMove move = quoridor.getCurrentGame().getCurrentPosition().getWhiteWallsOnBoard(i)
-								.getMove();
-						QuoridorApplication.quoridorWindow.displayWall(move.getTargetTile().getRow() -1,
-								move.getTargetTile().getColumn() -1, move.getWallDirection());
-					}
-					CardLayout layout = (CardLayout) (contentPane.getLayout());
-					layout.show(contentPane, "activeGamePanel");
-				} else {
-					Quoridor quoridor = QuoridorApplication.getQuoridor();
-					quoridor.delete();
-					quoridor = new Quoridor();
-				}
-				if (QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus() == GameStatus.Replay) {
-					setBoardConitionsWhenEnteringReplayMode();
-				}
+				});
+				wrong = true;
+				e.printStackTrace();
+			}
+		}else if(returnValue == JFileChooser.CANCEL_OPTION) {
+			wrong =true;
+			Quoridor quoridor = QuoridorApplication.getQuoridor();
+			quoridor.delete();
+			quoridor = new Quoridor();
+		}
+		if (!wrong) {
+			Quoridor quoridor = QuoridorApplication.getQuoridor();
+			for (int i = 0; i < quoridor.getCurrentGame().getCurrentPosition()
+					.numberOfBlackWallsOnBoard(); i++) {
+				WallMove move = quoridor.getCurrentGame().getCurrentPosition().getBlackWallsOnBoard(i)
+						.getMove();
+				QuoridorApplication.quoridorWindow.displayWall(move.getTargetTile().getRow() -1,
+						move.getTargetTile().getColumn() -1, move.getWallDirection());
+			}
+			for (int i = 0; i < quoridor.getCurrentGame().getCurrentPosition()
+					.numberOfWhiteWallsOnBoard(); i++) {
+				WallMove move = quoridor.getCurrentGame().getCurrentPosition().getWhiteWallsOnBoard(i)
+						.getMove();
+				QuoridorApplication.quoridorWindow.displayWall(move.getTargetTile().getRow() -1,
+						move.getTargetTile().getColumn() -1, move.getWallDirection());
+			}
+			CardLayout layout = (CardLayout) (contentPane.getLayout());
+			layout.show(contentPane, "activeGamePanel");
+								} else {
+									Quoridor quoridor = QuoridorApplication.getQuoridor();
+									quoridor.delete();
+									quoridor = new Quoridor();
+								}
+								if (QuoridorApplication.getQuoridor().getCurrentGame().getGameStatus() == GameStatus.Replay) {
+									setBoardConitionsWhenEnteringReplayMode();
+								}
 			}
 		});
 
+		//Add Button
 		titleScreenPanel.add(loadGameButton);
-		
 
-		/*
-		 * JLabel titleLabel = new JLabel("QUORIDOR");
-		 * sl_titleScreenPanel.putConstraint(SpringLayout.EAST, loadGameButton, -57,
-		 * SpringLayout.WEST, titleLabel);
-		 * sl_titleScreenPanel.putConstraint(SpringLayout.SOUTH, titleLabel, -187,
-		 * SpringLayout.SOUTH, titleScreenPanel);
-		 * sl_titleScreenPanel.putConstraint(SpringLayout.EAST, titleLabel, -63,
-		 * SpringLayout.EAST, titleScreenPanel); titleLabel.setFont(new
-		 * Font("Cooper Black", Font.PLAIN, 40)); titleScreenPanel.add(titleLabel);
-		 */
+
+		//*************************************************// 
+		//*************    Quit Game Button  **************//
+		//*************************************************// 
+		
+		
+		//Visual Configurations
+		quitGameButton.setBackground(new Color(41, 54, 63));
+		quitGameButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		quitGameButton.setOpaque(true);
+		quitGameButton.setPreferredSize(new Dimension(400, 40));
+		quitGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		quitGameButton.setForeground(Color.WHITE);
+		
+		//Location Configurations
+		sl_titleScreenPanel.putConstraint(SpringLayout.NORTH, quitGameButton, 500, SpringLayout.NORTH,titleScreenPanel);
+		sl_titleScreenPanel.putConstraint(SpringLayout.WEST, quitGameButton, 330, SpringLayout.WEST, titleScreenPanel);
+		
+		//Hover Action
+		quitGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				quitGameButton.setBackground(new Color(67, 82, 92));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				quitGameButton.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Click Action
+		
+		//Add Button
+		titleScreenPanel.add(quitGameButton);
+
+
 		
 		
 
@@ -634,16 +759,500 @@ public class QuoridorWindow extends JFrame {
 		activeGamePanel.add(gameBoardPanel, BorderLayout.CENTER);
 		gameBoardPanel.setLayout(new GridBagLayout());
 
-		ImagePanel setupPanel = new ImagePanel(new ImageIcon("src/main/resources/setup.png").getImage());
-		// JPanel setupPanel = new JPanel();
+		
+		
+//**
+//****
+//**********
+//*************************--------------------------------*************************//		
+//*************************           SETUP PANEL          *************************//
+//*************************--------------------------------*************************//			
+//**********	
+//****	
+//**
+		
+		JPanel setupPanel = new JPanel();
+		setupPanel.setBackground(Color.BLACK);
+	
+		Box player1NameBox = Box.createVerticalBox();
+		JButton startGameButton = new JButton("Start Game");
+		JButton selectGameModeButton = new JButton("Select Game Mode");
+		JButton returnToTitleButton = new JButton("Return to Title Screen");
+		
 		contentPane.add(setupPanel, "setupPanel");
 		SpringLayout sl_setupPanel = new SpringLayout();
-		setupPanel.setLayout(sl_setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, player1NameBox, -113, SpringLayout.EAST, setupPanel);
+		SpringLayout sl_navigationBarPanel = new SpringLayout();
+		
+		
 
-		Box player1NameBox = Box.createVerticalBox();
+		JPanel navigationBarPanel = new JPanel();
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, navigationBarPanel, -15, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, navigationBarPanel, -20, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, navigationBarPanel, -558, SpringLayout.SOUTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, navigationBarPanel, 45, SpringLayout.EAST, setupPanel);
+		navigationBarPanel.setBackground(new Color(41, 54, 63));
+		navigationBarPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
+		setupPanel.add(navigationBarPanel);
+		
+	
+		setupPanel.setLayout(sl_setupPanel);
+		navigationBarPanel.setLayout(sl_navigationBarPanel);
+		
+		
+		ImagePanel informationPanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, informationPanel, 88, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, informationPanel, -10, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, informationPanel, 570, SpringLayout.SOUTH, navigationBarPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, informationPanel, 524, SpringLayout.WEST, setupPanel);
+		informationPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
+		
+		
+		JLabel textRules = new JLabel("Rules");
+		
+		JLabel textSetup1 = new JLabel("Quoridor is played on a game board of 81");
+		JLabel textSetup2 = new JLabel("square spaces (9x9). Each player is ");
+		JLabel textSetup3 = new JLabel("represented by a pawn which begins at the");
+		JLabel textSetup4 = new JLabel("center space of one edge of the board. The ");
+		JLabel textSetup5 = new JLabel("objective is to be the first player to move");
+		JLabel textSetup6 = new JLabel("their pawn to any space on the opposite side");
+		JLabel textSetup7 = new JLabel("of the gameboard from which it begins.");
+		
+		JLabel textSetup8 = new JLabel("Players may place walls that are flat");
+		JLabel textSetup9 = new JLabel("two-space wide pieces which can be placed in");
+		JLabel textSetup10 = new JLabel("the groove that runs between spaces. Walls");
+		JLabel textSetup11 = new JLabel("block path of all pawns, which must go");
+		JLabel textSetup12 = new JLabel("around them. Placed walls cannot be removed.");
+		
+		JLabel textSetup13 = new JLabel("Pawns can be moved to any space at a right");
+		JLabel textSetup14 = new JLabel("angle (but not diagonally). If adjacent to ");
+		JLabel textSetup15 = new JLabel("another pawn, the pawn may jump over that");
+		JLabel textSetup16 = new JLabel("pawn. Placed walls may not be jumped. ");
+		
+		textRules.setForeground(Color.WHITE);
+		textSetup1.setForeground(Color.WHITE);
+		textSetup2.setForeground(Color.WHITE);
+		textSetup3.setForeground(Color.WHITE);
+		textSetup4.setForeground(Color.WHITE);
+		textSetup5.setForeground(Color.WHITE);
+		textSetup6.setForeground(Color.WHITE);
+		textSetup7.setForeground(Color.WHITE);
+		textSetup8.setForeground(Color.WHITE);
+		textSetup9.setForeground(Color.WHITE);
+		textSetup10.setForeground(Color.WHITE);
+		textSetup11.setForeground(Color.WHITE);
+		textSetup12.setForeground(Color.WHITE);
+		textSetup13.setForeground(Color.WHITE);
+		textSetup14.setForeground(Color.WHITE);
+		textSetup15.setForeground(Color.WHITE);
+		textSetup16.setForeground(Color.WHITE);
+		
+		
+		textRules.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup1.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup2.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup3.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup4.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup5.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup6.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup7.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup8.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup9.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup10.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup11.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup12.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup13.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup14.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup15.setFont(new Font("Dialog", Font.BOLD, 20));
+		textSetup16.setFont(new Font("Dialog", Font.BOLD, 20));
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textRules, 110, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textRules, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup1, 150, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup1, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup2, 172, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup2, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup3, 194, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup3, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup4, 216, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup4, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup5, 238, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup5, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup6, 260, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup6, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup7, 282, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup7, 10, SpringLayout.WEST, setupPanel);
+
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup8, 322, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup8, 10, SpringLayout.WEST, setupPanel);
+
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup9, 344, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup9, 10, SpringLayout.WEST, setupPanel);
+
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup10, 366, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup10, 10, SpringLayout.WEST, setupPanel);
+
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup11, 388, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup11, 10, SpringLayout.WEST, setupPanel);
+
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup12, 410, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup12, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup13, 450, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup13, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup14, 472, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup14, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup15, 494, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup15, 10, SpringLayout.WEST, setupPanel);
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, textSetup16, 516, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, textSetup16, 10, SpringLayout.WEST, setupPanel);
+		
+		
+		//************************************************// 
+		//*************  Select Game Button  *************//
+		//************************************************// 
+		
+		JPanel dropDownMenuPanel = new JPanel();
+		JButton selectSinglePlayer = new JButton(" Single Player");
+		JButton select2Player = new JButton(" 2 Player");
+		JButton select4Player = new JButton(" 4 Player");
+		JButton selectBattleMode = new JButton(" Battle Mode");
+		JButton selectCaptureTheFlag = new JButton(" Capture the Flag");
+		JButton selectCustom = new JButton(" Custom Mode");
+
+		
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, dropDownMenuPanel, 0, SpringLayout.SOUTH, navigationBarPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, dropDownMenuPanel, 0, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, dropDownMenuPanel, 240, SpringLayout.SOUTH, navigationBarPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, dropDownMenuPanel, -600, SpringLayout.EAST, setupPanel);
+		
+		setupPanel.add(dropDownMenuPanel);
+		setupPanel.add(textRules);
+		setupPanel.add(textSetup1);
+		setupPanel.add(textSetup2);
+		setupPanel.add(textSetup3);
+		setupPanel.add(textSetup4);
+		setupPanel.add(textSetup5);
+		setupPanel.add(textSetup6);
+		setupPanel.add(textSetup7);
+		setupPanel.add(textSetup8);
+		setupPanel.add(textSetup9);
+		setupPanel.add(textSetup10);
+		setupPanel.add(textSetup11);
+		setupPanel.add(textSetup12);
+		setupPanel.add(textSetup13);
+		setupPanel.add(textSetup14);
+		setupPanel.add(textSetup15);
+		setupPanel.add(textSetup16);
+		setupPanel.add(informationPanel);
+		
+		SpringLayout sl_dropDownMenuPanel = new SpringLayout();
+		dropDownMenuPanel.setLayout(sl_dropDownMenuPanel);
+		dropDownMenuPanel.setVisible(false);
+		
+		
+		//*************   Drop Down Items    *************//
+		
+		
+		//******** Single Player Item ********//
+		//------------------------------------//
+		
+		//Visual Configurations
+		selectSinglePlayer.setPreferredSize(new Dimension(400, 40));
+		selectSinglePlayer.setOpaque(true);
+		selectSinglePlayer.setForeground(Color.WHITE);
+		selectSinglePlayer.setFont(new Font("Dialog", Font.BOLD, 20));
+		selectSinglePlayer.setBorder(new LineBorder(new Color(255, 255, 255)));
+		selectSinglePlayer.setBackground(new Color(41, 54, 63));
+		selectSinglePlayer.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, selectSinglePlayer, 0, SpringLayout.NORTH, dropDownMenuPanel);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, selectSinglePlayer, 0, SpringLayout.WEST, dropDownMenuPanel);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, selectSinglePlayer, 0, SpringLayout.EAST, dropDownMenuPanel);
+		
+		//Hover Action
+		selectSinglePlayer.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				selectSinglePlayer.setBackground(new Color(67, 82, 92));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				selectSinglePlayer.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(selectSinglePlayer);
+		
+		
+		//********   2 Player Item    ********//
+		//------------------------------------//
+		
+		//Visual Configurations
+		select2Player.setPreferredSize(new Dimension(400, 40));
+		select2Player.setOpaque(true);
+		select2Player.setForeground(Color.WHITE);
+		select2Player.setFont(new Font("Dialog", Font.BOLD, 20));
+		select2Player.setBorder(new LineBorder(new Color(255, 255, 255)));
+		select2Player.setBackground(new Color(41, 54, 63));
+		select2Player.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, select2Player, 0, SpringLayout.SOUTH, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, select2Player, 0, SpringLayout.WEST, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, select2Player, 0, SpringLayout.EAST, dropDownMenuPanel);
+		
+		//Hover Action
+		select2Player.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				select2Player.setBackground(new Color(67, 82, 92));
+			}
+					
+			public void mouseExited(MouseEvent evt) {
+				select2Player.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(select2Player);
+		
+		
+		//********   4 Player Item    ********//
+		//------------------------------------//
+		
+		//Visual Configurations
+		select4Player.setPreferredSize(new Dimension(400, 40));
+		select4Player.setOpaque(true);
+		select4Player.setForeground(Color.WHITE);
+		select4Player.setFont(new Font("Dialog", Font.BOLD, 20));
+		select4Player.setBorder(new LineBorder(new Color(255, 255, 255)));
+		select4Player.setBackground(new Color(41, 54, 63));
+		select4Player.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, select4Player, 0, SpringLayout.SOUTH, select2Player);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, select4Player, 0, SpringLayout.WEST, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, select4Player, 0, SpringLayout.EAST, selectSinglePlayer);
+		
+		//Hover Action
+		select4Player.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				select4Player.setBackground(new Color(67, 82, 92));
+			}
+					
+			public void mouseExited(MouseEvent evt) {
+				select4Player.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(select4Player);
+		
+		
+		//********  Battle Mode Item  ********//
+		//------------------------------------//
+		
+		//Visual Configurations
+		selectBattleMode.setPreferredSize(new Dimension(400, 40));
+		selectBattleMode.setOpaque(true);
+		selectBattleMode.setHorizontalAlignment(SwingConstants.LEFT);
+		selectBattleMode.setForeground(Color.WHITE);
+		selectBattleMode.setFont(new Font("Dialog", Font.BOLD, 20));
+		selectBattleMode.setBorder(new LineBorder(new Color(255, 255, 255)));
+		selectBattleMode.setBackground(new Color(41, 54, 63));
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, selectBattleMode, 0, SpringLayout.SOUTH, select4Player);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, selectBattleMode, 0, SpringLayout.WEST, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, selectBattleMode, 0, SpringLayout.EAST, selectSinglePlayer);
+		
+		//Hover Action
+		selectBattleMode.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				selectBattleMode.setBackground(new Color(67, 82, 92));
+			}
+					
+			public void mouseExited(MouseEvent evt) {
+				selectBattleMode.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(selectBattleMode);
+		
+		
+		//******* Capture the Flag Item ******//
+		//------------------------------------//
+		
+		//Visual Configurations
+		selectCaptureTheFlag.setPreferredSize(new Dimension(400, 40));
+		selectCaptureTheFlag.setOpaque(true);
+		selectCaptureTheFlag.setHorizontalAlignment(SwingConstants.LEFT);
+		selectCaptureTheFlag.setForeground(Color.WHITE);
+		selectCaptureTheFlag.setFont(new Font("Dialog", Font.BOLD, 20));
+		selectCaptureTheFlag.setBorder(new LineBorder(new Color(255, 255, 255)));
+		selectCaptureTheFlag.setBackground(new Color(41, 54, 63));
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, selectCaptureTheFlag, 0, SpringLayout.SOUTH, selectBattleMode);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, selectCaptureTheFlag, 0, SpringLayout.WEST, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, selectCaptureTheFlag, 0, SpringLayout.EAST, selectSinglePlayer);
+		
+		//Hover Action
+		selectCaptureTheFlag.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				selectCaptureTheFlag.setBackground(new Color(67, 82, 92));
+			}
+					
+			public void mouseExited(MouseEvent evt) {
+				selectCaptureTheFlag.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(selectCaptureTheFlag);
+		
+		
+		//********  Custom Mode Item  ********//
+		//------------------------------------//
+
+		//Visual Configurations
+		selectCustom.setPreferredSize(new Dimension(400, 40));
+		selectCustom.setOpaque(true);
+		selectCustom.setHorizontalAlignment(SwingConstants.LEFT);
+		selectCustom.setForeground(Color.WHITE);
+		selectCustom.setFont(new Font("Dialog", Font.BOLD, 20));
+		selectCustom.setBorder(new LineBorder(new Color(255, 255, 255)));
+		selectCustom.setBackground(new Color(41, 54, 63));
+		
+		//Location Configurations
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.NORTH, selectCustom, 0, SpringLayout.SOUTH, selectCaptureTheFlag);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.WEST, selectCustom, 0, SpringLayout.WEST, selectSinglePlayer);
+		sl_dropDownMenuPanel.putConstraint(SpringLayout.EAST, selectCustom, 0, SpringLayout.EAST, selectSinglePlayer);
+		
+		//Hover Action
+		selectCustom.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				selectCustom.setBackground(new Color(67, 82, 92));
+			}
+					
+			public void mouseExited(MouseEvent evt) {
+				selectCustom.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		//Add Button
+		dropDownMenuPanel.add(selectCustom);
+		
+		
+		
+		
+		//Visual Configurations
+		selectGameModeButton.setBackground(new Color(41, 54, 63));
+		selectGameModeButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		selectGameModeButton.setOpaque(true);
+		selectGameModeButton.setPreferredSize(new Dimension(400, 40));
+		selectGameModeButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		selectGameModeButton.setForeground(Color.WHITE);
+		//dropDownMenuPanel.setVisible(false);
+		//Location Configurations
+		sl_navigationBarPanel.putConstraint(SpringLayout.NORTH, selectGameModeButton, 10, SpringLayout.NORTH, navigationBarPanel);
+		sl_navigationBarPanel.putConstraint(SpringLayout.WEST, selectGameModeButton, 0, SpringLayout.WEST, navigationBarPanel);
+		sl_navigationBarPanel.putConstraint(SpringLayout.SOUTH, selectGameModeButton, 0, SpringLayout.SOUTH, navigationBarPanel);
+		sl_navigationBarPanel.putConstraint(SpringLayout.EAST, selectGameModeButton, 542, SpringLayout.WEST, navigationBarPanel);
+
+		//Hover Action
+		selectGameModeButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				selectGameModeButton.setBackground(new Color(67, 82, 92));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				selectGameModeButton.setBackground(new Color(41, 54, 63));
+			}
+		});
+		
+		
+		//Click Action
+		selectGameModeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent a) {
+				if(dropDownMenuPanel.isVisible())
+				{
+					dropDownMenuPanel.setVisible(false);
+				
+				}
+				else
+				{
+					dropDownMenuPanel.setVisible(true);
+					
+				}
+			}
+			});
+			
+		//Add Button
+		navigationBarPanel.add(selectGameModeButton);
+		
+		
+		
+		
+		//************************************************// 
+		//************ Return to Title Button ************//
+		//************************************************// 
+		
+		//Visual Configurations
+		returnToTitleButton.setPreferredSize(new Dimension(400, 40));
+		returnToTitleButton.setOpaque(true);
+		returnToTitleButton.setForeground(Color.WHITE);
+		returnToTitleButton.setFont(new Font("Dialog", Font.BOLD, 20));
+		returnToTitleButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		returnToTitleButton.setBackground(new Color(41, 54, 63));
+		
+		//Location Configurations
+		sl_navigationBarPanel.putConstraint(SpringLayout.NORTH, returnToTitleButton, 10, SpringLayout.NORTH, navigationBarPanel);
+		sl_navigationBarPanel.putConstraint(SpringLayout.SOUTH, returnToTitleButton, 0, SpringLayout.SOUTH, navigationBarPanel);
+		sl_navigationBarPanel.putConstraint(SpringLayout.WEST, returnToTitleButton, 0, SpringLayout.EAST, selectGameModeButton);
+		sl_navigationBarPanel.putConstraint(SpringLayout.EAST, returnToTitleButton, -42, SpringLayout.EAST, navigationBarPanel);
+		
+		//Hover Action
+		returnToTitleButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				returnToTitleButton.setBackground(new Color(67, 82, 92));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				returnToTitleButton.setBackground(new Color(41, 54, 63));
+			}
+		});
+				
+		//Click Action
+		returnToTitleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent a) {
+				dropDownMenuPanel.setVisible(false);
+				CardLayout layout = (CardLayout) (contentPane.getLayout());
+				layout.show(contentPane, "titleScreenPanel");	
+				
+			}
+		});
+			
+		//Add Button		
+		navigationBarPanel.add(returnToTitleButton);
+		
+		
+	
+		
+		//Name Box 1
 		player1NameBox.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, player1NameBox, 107, SpringLayout.NORTH, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, player1NameBox, 30, SpringLayout.WEST, setupPanel);
 		setupPanel.add(player1NameBox);
 
 		Component nameTopRigid = Box.createRigidArea(new Dimension(10, 10));
@@ -694,8 +1303,9 @@ public class QuoridorWindow extends JFrame {
 		player1NameBox.add(rigidArea);
 
 		Box thinkingTimeBox = Box.createVerticalBox();
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, thinkingTimeBox, 63, SpringLayout.SOUTH, player1NameBox);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, thinkingTimeBox, 0, SpringLayout.WEST, player1NameBox);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, player1NameBox, -225, SpringLayout.NORTH, thinkingTimeBox);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, thinkingTimeBox, -29, SpringLayout.NORTH, startGameButton);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, thinkingTimeBox, -10, SpringLayout.EAST, setupPanel);
 		setupPanel.add(thinkingTimeBox);
 
 		JLabel setTimerLabel = new JLabel("Set Timer - Minutes & Seconds ");
@@ -717,10 +1327,17 @@ public class QuoridorWindow extends JFrame {
 
 
 		JComboBox existingUsernames1 = new JComboBox();
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames1, 0, SpringLayout.NORTH, player1NameBox);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames1, 10, SpringLayout.EAST, player1NameBox);
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, existingUsernames1, 144, SpringLayout.NORTH, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames1, 200, SpringLayout.EAST, player1NameBox);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames1, 612, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames1, 34, SpringLayout.SOUTH, navigationBarPanel);
+		
+
+		
+		
+		
+		
+		
+		
+		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames1, 17, SpringLayout.EAST, setupPanel);
 		existingUsernames1.setFont(new Font("Cooper Black", Font.PLAIN, 14));
 		existingUsernames1.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
 		setupPanel.add(existingUsernames1);
@@ -737,19 +1354,13 @@ public class QuoridorWindow extends JFrame {
 		existingUsernames1.addItem("Sam");
 		existingUsernames1.addItem("Luke");
 		existingUsernames1.addItem("Yin");
-
-
-
-
-		JButton startGameButton = new JButton("Start Game");
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, startGameButton, 0, SpringLayout.SOUTH, thinkingTimeBox);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, startGameButton, -55, SpringLayout.EAST, setupPanel);
 		startGameButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 
 		JComboBox existingUsernames2 = new JComboBox();
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames2, 6, SpringLayout.SOUTH, existingUsernames1);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames2, 0, SpringLayout.WEST, existingUsernames1);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames2, 0, SpringLayout.EAST, existingUsernames1);
+		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames2, 178, SpringLayout.NORTH, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames2, 612, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames2, 31, SpringLayout.EAST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, existingUsernames1, -6, SpringLayout.NORTH, existingUsernames2);
 		existingUsernames2.setFont(new Font("Cooper Black", Font.PLAIN, 14));
 		existingUsernames2.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
 		setupPanel.add(existingUsernames2);
@@ -767,6 +1378,38 @@ public class QuoridorWindow extends JFrame {
 		existingUsernames2.addItem("Luke");
 		existingUsernames2.addItem("Yin");
 
+		
+
+		//************************************************// 
+		//*************   Start Game Button  *************//
+		//************************************************// 
+		
+		//Visual Configurations
+		startGameButton.setBackground(new Color(255, 255, 255));
+		startGameButton.setForeground(new Color(41, 54, 63));
+		startGameButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		startGameButton.setOpaque(true);
+		startGameButton.setPreferredSize(new Dimension(400, 40));
+		startGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		
+		//Location Configurations
+		sl_setupPanel.putConstraint(SpringLayout.WEST, startGameButton, -498, SpringLayout.EAST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.EAST, startGameButton, 0, SpringLayout.EAST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.SOUTH, startGameButton, 0, SpringLayout.SOUTH, setupPanel);
+		
+		//Hover Action
+		startGameButton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				startGameButton.setBackground(new Color(199, 205, 214));
+			}
+			
+			public void mouseExited(MouseEvent evt) {
+				startGameButton.setBackground(new Color(255, 255, 255));
+			}
+		});
+		
+		
+		//Click Action
 		startGameButton.addActionListener(new ActionListener() {
 			/**
 			 * <p>
@@ -978,7 +1621,7 @@ public class QuoridorWindow extends JFrame {
 			}
 		});
 		setupPanel.add(startGameButton);
-
+		
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
