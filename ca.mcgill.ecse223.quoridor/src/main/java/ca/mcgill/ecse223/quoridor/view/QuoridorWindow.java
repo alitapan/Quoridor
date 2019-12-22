@@ -357,15 +357,74 @@ public class QuoridorWindow extends JFrame {
 
 		
 		
-
-		JPanel activeGamePanel = new JPanel();		
-		activeGamePanel.setBackground(mainScreenBackgroundColor);
-		activeGamePanel.setOpaque(true);
+		ImagePanel activeGamePanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
+		JPanel activeGameNavigationBarPanel = new JPanel();
+		JPanel activeGameInformationPanel = new JPanel();
+				
+		//activeGamePanel.setBackground(mainScreenBackgroundColor);
+		//activeGamePanel.setOpaque(true);
 		contentPane.add(activeGamePanel, "activeGamePanel");
 		activeGamePanel.setLayout(new BorderLayout(0, 0));
 
+		
+		
+		
+		activeGameInformationPanel.setBackground(new Color(0, 0, 0));
+		activeGameInformationPanel.setBorder(new LineBorder(Color.WHITE));
+		
+		//setupPanel.setBackground(Color.BLACK);
+		//setupPanel.setBackground(new Color(122, 119, 140, 40));
+		
+		
+	
+		SpringLayout sl_activeGamePanel = new SpringLayout();
+		SpringLayout sl_activeGameNavigationBarPanel = new SpringLayout();
+		SpringLayout sl_activeGameInformationPanel = new SpringLayout();
+		
+		activeGamePanel.setLayout(sl_activeGamePanel);
+		activeGameNavigationBarPanel.setLayout(sl_activeGameNavigationBarPanel);
+		activeGameInformationPanel.setLayout(sl_activeGameInformationPanel);
+		
+		sl_activeGamePanel.putConstraint(SpringLayout.NORTH, activeGameNavigationBarPanel, -15, SpringLayout.NORTH, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.WEST, activeGameNavigationBarPanel, -20, SpringLayout.WEST, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.SOUTH, activeGameNavigationBarPanel, -558, SpringLayout.SOUTH, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.EAST, activeGameNavigationBarPanel, 45, SpringLayout.EAST, activeGamePanel);
+		
+		activeGameNavigationBarPanel.setBackground(new Color(41, 54, 63));
+		activeGameNavigationBarPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
+		activeGamePanel.add(activeGameNavigationBarPanel);
+	
+
+		activeGameNavigationBarPanel.setLayout(sl_activeGameNavigationBarPanel);
+		
+		sl_activeGamePanel.putConstraint(SpringLayout.NORTH, activeGameInformationPanel, 88, SpringLayout.NORTH, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.WEST, activeGameInformationPanel,542, SpringLayout.WEST, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.SOUTH, activeGameInformationPanel, 570, SpringLayout.SOUTH, activeGamePanel);
+		sl_activeGamePanel.putConstraint(SpringLayout.EAST, activeGameInformationPanel, 10, SpringLayout.EAST, activeGamePanel);
+		
+		activeGamePanel.add(activeGameInformationPanel);
+		
+
+		
 		Box blackPlayerInfoVerticalBox = Box.createVerticalBox();
-		activeGamePanel.add(blackPlayerInfoVerticalBox, BorderLayout.WEST);
+		
+		sl_activeGameInformationPanel.putConstraint(SpringLayout.NORTH, blackPlayerInfoVerticalBox, 100, SpringLayout.SOUTH, activeGameInformationPanel);
+		sl_activeGameInformationPanel.putConstraint(SpringLayout.WEST, blackPlayerInfoVerticalBox, 30, SpringLayout.WEST, activeGameInformationPanel);
+		
+		activeGameInformationPanel.add(blackPlayerInfoVerticalBox);
+
+		
+		
+		//JPanel gameBoardPanel = new JPanel();
+		ImagePanel gameBoardPanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
+		
+		
+		
+		
+		//gameBoardPanel.setBackground(boardBackgroundColor);
+		//gameBoardPanel.setOpaque(true);
+		//activeGamePanel.add(gameBoardPanel, BorderLayout.CENTER);
+		//gameBoardPanel.setLayout(new GridBagLayout());
 
 
 		JLabel lblExtraBlack = new JLabel(""+blackPawn);
@@ -739,12 +798,8 @@ public class QuoridorWindow extends JFrame {
 		//titleTimeBox.setBackground(Color.white);
 		activeGamePanel.add(titleTimeBox, BorderLayout.NORTH);
 
-		JLabel gameTitleLabel = new JLabel("QUORIDOR");
-		gameTitleLabel.setAlignmentX(0.5f);
-		gameTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		gameTitleLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
-		//gameTitleLabel.setForeground(Color.BLUE);
-		titleTimeBox.add(gameTitleLabel);
+		
+
 
 		currentPlayerName = new JLabel("Current Player : ");
 		currentPlayerName.setAlignmentX(0.4f);
@@ -753,11 +808,6 @@ public class QuoridorWindow extends JFrame {
 		titleTimeBox.add(currentPlayerName);
 
 		// board
-		JPanel gameBoardPanel = new JPanel();
-		gameBoardPanel.setBackground(boardBackgroundColor);
-		gameBoardPanel.setOpaque(true);
-		activeGamePanel.add(gameBoardPanel, BorderLayout.CENTER);
-		gameBoardPanel.setLayout(new GridBagLayout());
 
 		
 		
@@ -769,46 +819,56 @@ public class QuoridorWindow extends JFrame {
 //*************************--------------------------------*************************//			
 //**********	
 //****	
-//**
+//**	
+		//JPanel setupPanel = new JPanel();
 		
-		JPanel setupPanel = new JPanel();
-		setupPanel.setBackground(Color.BLACK);
-	
-		Box player1NameBox = Box.createVerticalBox();
+		ImagePanel setupPanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
+		JPanel navigationBarPanel = new JPanel();
+		
+		//ImagePanel informationPanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
+		JPanel informationPanel = new JPanel();
+		
+		
 		JButton startGameButton = new JButton("Start Game");
 		JButton selectGameModeButton = new JButton("Select Game Mode");
 		JButton returnToTitleButton = new JButton("Return to Title Screen");
 		
+		//informationPanel.setBackground(new Color(122, 119, 140, 170));
+		informationPanel.setBackground(new Color(0, 0, 0));
+		informationPanel.setBorder(new LineBorder(Color.WHITE));
+		
+		//setupPanel.setBackground(Color.BLACK);
+		//setupPanel.setBackground(new Color(122, 119, 140, 40));
 		contentPane.add(setupPanel, "setupPanel");
+		
+	
 		SpringLayout sl_setupPanel = new SpringLayout();
-		sl_setupPanel.putConstraint(SpringLayout.EAST, player1NameBox, -113, SpringLayout.EAST, setupPanel);
 		SpringLayout sl_navigationBarPanel = new SpringLayout();
+		SpringLayout sl_informationPanel = new SpringLayout();
 		
+		setupPanel.setLayout(sl_setupPanel);
+		navigationBarPanel.setLayout(sl_navigationBarPanel);
+		informationPanel.setLayout(sl_informationPanel);
 		
-
-		JPanel navigationBarPanel = new JPanel();
 		sl_setupPanel.putConstraint(SpringLayout.NORTH, navigationBarPanel, -15, SpringLayout.NORTH, setupPanel);
 		sl_setupPanel.putConstraint(SpringLayout.WEST, navigationBarPanel, -20, SpringLayout.WEST, setupPanel);
 		sl_setupPanel.putConstraint(SpringLayout.SOUTH, navigationBarPanel, -558, SpringLayout.SOUTH, setupPanel);
 		sl_setupPanel.putConstraint(SpringLayout.EAST, navigationBarPanel, 45, SpringLayout.EAST, setupPanel);
+		
 		navigationBarPanel.setBackground(new Color(41, 54, 63));
 		navigationBarPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
 		setupPanel.add(navigationBarPanel);
-		
 	
 		setupPanel.setLayout(sl_setupPanel);
 		navigationBarPanel.setLayout(sl_navigationBarPanel);
 		
-		
-		ImagePanel informationPanel = new ImagePanel(new ImageIcon("src/main/resources/menu_image.png").getImage());
 		sl_setupPanel.putConstraint(SpringLayout.NORTH, informationPanel, 88, SpringLayout.NORTH, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, informationPanel, -10, SpringLayout.WEST, setupPanel);
+		sl_setupPanel.putConstraint(SpringLayout.WEST, informationPanel,542, SpringLayout.WEST, navigationBarPanel);
 		sl_setupPanel.putConstraint(SpringLayout.SOUTH, informationPanel, 570, SpringLayout.SOUTH, navigationBarPanel);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, informationPanel, 524, SpringLayout.WEST, setupPanel);
-		informationPanel.setBorder(new LineBorder(new Color(156, 159, 161)));
+		sl_setupPanel.putConstraint(SpringLayout.EAST, informationPanel, 10, SpringLayout.EAST, setupPanel);
 		
 		
-		JLabel textRules = new JLabel("Rules");
+		JLabel textRules = new JLabel("Rules: (2 Player)");
 		
 		JLabel textSetup1 = new JLabel("Quoridor is played on a game board of 81");
 		JLabel textSetup2 = new JLabel("square spaces (9x9). Each player is ");
@@ -847,24 +907,23 @@ public class QuoridorWindow extends JFrame {
 		textSetup15.setForeground(Color.WHITE);
 		textSetup16.setForeground(Color.WHITE);
 		
-		
-		textRules.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup1.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup2.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup3.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup4.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup5.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup6.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup7.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup8.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup9.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup10.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup11.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup12.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup13.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup14.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup15.setFont(new Font("Dialog", Font.BOLD, 20));
-		textSetup16.setFont(new Font("Dialog", Font.BOLD, 20));
+		textRules.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup1.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup2.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup3.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup4.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup5.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup6.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup7.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup8.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup9.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup10.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup11.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup12.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup13.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup14.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup15.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textSetup16.setFont(new Font("Dialog", Font.PLAIN, 20));
 		
 		sl_setupPanel.putConstraint(SpringLayout.NORTH, textRules, 110, SpringLayout.NORTH, setupPanel);
 		sl_setupPanel.putConstraint(SpringLayout.WEST, textRules, 10, SpringLayout.WEST, setupPanel);
@@ -960,9 +1019,9 @@ public class QuoridorWindow extends JFrame {
 		dropDownMenuPanel.setLayout(sl_dropDownMenuPanel);
 		dropDownMenuPanel.setVisible(false);
 		
-		
+		//************************************************//
 		//*************   Drop Down Items    *************//
-		
+		//************************************************//
 		
 		//******** Single Player Item ********//
 		//------------------------------------//
@@ -1155,8 +1214,9 @@ public class QuoridorWindow extends JFrame {
 		//Add Button
 		dropDownMenuPanel.add(selectCustom);
 		
-		
-		
+		//************************************************//
+		//************************************************//
+		//************************************************//
 		
 		//Visual Configurations
 		selectGameModeButton.setBackground(new Color(41, 54, 63));
@@ -1249,128 +1309,34 @@ public class QuoridorWindow extends JFrame {
 		navigationBarPanel.add(returnToTitleButton);
 		
 		
+
+		//************************************************//
+		//*************    Game Settings     *************//
+		//************************************************//
+		
 	
-		
-		//Name Box 1
-		player1NameBox.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		setupPanel.add(player1NameBox);
-
-		Component nameTopRigid = Box.createRigidArea(new Dimension(10, 10));
-		player1NameBox.add(nameTopRigid);
-
-		Box player1HorBox = Box.createHorizontalBox();
-		player1NameBox.add(player1HorBox);
-
-		Component nameP1leftRigid = Box.createRigidArea(new Dimension(10, 10));
-		player1HorBox.add(nameP1leftRigid);
-
-		JLabel lblPlayer1Name = new JLabel("Player 1 Name");
-		lblPlayer1Name.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-
-		player1HorBox.add(lblPlayer1Name);
-
-		Component player1NamesStrut = Box.createHorizontalStrut(20);
-		player1HorBox.add(player1NamesStrut);
-
-		player1Field = new JTextField();
-		player1HorBox.add(player1Field);
-		player1Field.setColumns(10);
-
-		Component nameP1RightRigid = Box.createRigidArea(new Dimension(10, 10));
-		player1HorBox.add(nameP1RightRigid);
-
-		Box player2HorBox = Box.createHorizontalBox();
-		player1NameBox.add(player2HorBox);
-
-		Component rigidArea_4 = Box.createRigidArea(new Dimension(10, 10));
-		player2HorBox.add(rigidArea_4);
-
-		JLabel lblPlayerName_1 = new JLabel("Player 2 Name");
-		lblPlayerName_1.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-		player2HorBox.add(lblPlayerName_1);
-
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-		player2HorBox.add(horizontalStrut_1);
-
-		player2Field = new JTextField();
-		player2HorBox.add(player2Field);
-		player2Field.setColumns(10);
-
-		Component rigidArea_2 = Box.createRigidArea(new Dimension(10, 10));
-		player2HorBox.add(rigidArea_2);
-
-		Component rigidArea = Box.createRigidArea(new Dimension(10, 10));
-		player1NameBox.add(rigidArea);
-
-		Box thinkingTimeBox = Box.createVerticalBox();
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, player1NameBox, -225, SpringLayout.NORTH, thinkingTimeBox);
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, thinkingTimeBox, -29, SpringLayout.NORTH, startGameButton);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, thinkingTimeBox, -10, SpringLayout.EAST, setupPanel);
-		setupPanel.add(thinkingTimeBox);
-
-		JLabel setTimerLabel = new JLabel("Set Timer - Minutes & Seconds ");
-		setTimerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		setTimerLabel.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-		thinkingTimeBox.add(setTimerLabel);
-
-		Box timefieldBox = Box.createHorizontalBox();
-		thinkingTimeBox.add(timefieldBox);
-
-		minuteField = new JTextField();
-		minuteField.setColumns(2);
-		minuteField.setHorizontalAlignment(SwingConstants.TRAILING);
-		timefieldBox.add(minuteField);
-
-		secondField = new JTextField();
-		timefieldBox.add(secondField);
-		secondField.setColumns(2);
-
-
+		JLabel player1Text = new JLabel("Player 1: Enter username");
+		JLabel player2Text = new JLabel("Player 2: Enter username");
+		JLabel player1SelectPawn = new JLabel("Select pawn");
+		JLabel player2SelectPawn = new JLabel("Select pawn");
+		JLabel setTimerLabel = new JLabel("Enter thinking time");
+		JLabel minutesLabel = new JLabel("minutes,");
+		JLabel secondsLabel = new JLabel("seconds");
 		JComboBox existingUsernames1 = new JComboBox();
-		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames1, 612, SpringLayout.WEST, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames1, 34, SpringLayout.SOUTH, navigationBarPanel);
-		
-
-		
-		
-		
+		JComboBox existingUsernames2 = new JComboBox();
+		JTextField player1Field = new JTextField(23);
+		JTextField player2Field = new JTextField(23);
+		JTextField minuteField = new JTextField(5);
+		JTextField secondField = new JTextField(5);
 		
 		
-		
-		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames1, 17, SpringLayout.EAST, setupPanel);
-		existingUsernames1.setFont(new Font("Cooper Black", Font.PLAIN, 14));
-		existingUsernames1.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
-		setupPanel.add(existingUsernames1);
-		existingUsernames1.addItem("Superman");
-		existingUsernames1.addItem("Batman");
-		existingUsernames1.addItem("Spiderman");
-		existingUsernames1.addItem("Thor");
-		existingUsernames1.addItem("Mario");
-		existingUsernames1.addItem("Luigi");
-		existingUsernames1.addItem("Wario");
 		existingUsernames1.addItem("Ali");
 		existingUsernames1.addItem("William");
 		existingUsernames1.addItem("Arneet");
 		existingUsernames1.addItem("Sam");
 		existingUsernames1.addItem("Luke");
 		existingUsernames1.addItem("Yin");
-		startGameButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-
-		JComboBox existingUsernames2 = new JComboBox();
-		sl_setupPanel.putConstraint(SpringLayout.NORTH, existingUsernames2, 178, SpringLayout.NORTH, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.WEST, existingUsernames2, 612, SpringLayout.WEST, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, existingUsernames2, 31, SpringLayout.EAST, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, existingUsernames1, -6, SpringLayout.NORTH, existingUsernames2);
-		existingUsernames2.setFont(new Font("Cooper Black", Font.PLAIN, 14));
-		existingUsernames2.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
-		setupPanel.add(existingUsernames2);
-		existingUsernames2.addItem("Superman");
-		existingUsernames2.addItem("Batman");
-		existingUsernames2.addItem("Spiderman");
-		existingUsernames2.addItem("Thor");
-		existingUsernames2.addItem("Mario");
-		existingUsernames2.addItem("Luigi");
-		existingUsernames2.addItem("Wario");
+		
 		existingUsernames2.addItem("Ali");
 		existingUsernames2.addItem("William");
 		existingUsernames2.addItem("Arneet");
@@ -1379,6 +1345,197 @@ public class QuoridorWindow extends JFrame {
 		existingUsernames2.addItem("Yin");
 
 		
+		player1Text.setFont(new Font("Dialog", Font.ITALIC, 20));
+		player2Text.setFont(new Font("Dialog", Font.ITALIC, 20));
+		player1SelectPawn.setFont(new Font("Dialog", Font.ITALIC, 20));
+		player2SelectPawn.setFont(new Font("Dialog", Font.ITALIC, 20));
+		player1Text.setForeground(Color.WHITE);
+		player2Text.setForeground(Color.WHITE);
+		player1SelectPawn.setForeground(Color.WHITE);
+		player2SelectPawn.setForeground(Color.WHITE);
+		
+		existingUsernames1.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		existingUsernames2.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		existingUsernames1.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
+		existingUsernames2.setModel(new DefaultComboBoxModel(Controller.listExistingUsernames()));
+		
+		setTimerLabel.setFont(new Font("Dialog", Font.ITALIC, 20));
+		minutesLabel.setFont(new Font("Dialog", Font.PLAIN, 18));
+		secondsLabel.setFont(new Font("Dialog", Font.PLAIN, 18));
+		setTimerLabel.setForeground(Color.WHITE);
+		minutesLabel.setForeground(Color.WHITE);
+		secondsLabel.setForeground(Color.WHITE);
+		
+
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player1Text, 78, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player1Text, 30, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player2Text, 168, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player2Text, 30, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player1SelectPawn, 78, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player1SelectPawn, 350, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player2SelectPawn, 168, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player2SelectPawn, 350, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player1Field, 100, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player1Field, 28, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, player2Field, 190, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, player2Field, 28, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.NORTH, existingUsernames1, -1, SpringLayout.SOUTH, player1Field);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, existingUsernames1, 26, SpringLayout.WEST, informationPanel);
+		sl_informationPanel.putConstraint(SpringLayout.EAST, existingUsernames1, -191, SpringLayout.EAST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.NORTH, existingUsernames2, -1, SpringLayout.SOUTH, player2Field);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, existingUsernames2, 26, SpringLayout.WEST, informationPanel);
+		sl_informationPanel.putConstraint(SpringLayout.EAST, existingUsernames2, -191, SpringLayout.EAST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, minutesLabel, 419, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, minutesLabel, 100, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, setTimerLabel, 400, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, setTimerLabel, 30, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, minuteField, 422, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, minuteField, 28, SpringLayout.WEST, informationPanel);
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, secondsLabel, 419, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, secondsLabel, 252, SpringLayout.WEST, informationPanel);
+
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, secondField, 422, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, secondField, 180, SpringLayout.WEST, informationPanel);
+		
+		
+		informationPanel.add(player1Text);
+		informationPanel.add(player1SelectPawn);
+		informationPanel.add(player1Field);
+		informationPanel.add(player2Text);
+		informationPanel.add(player2SelectPawn);
+		informationPanel.add(player2Field);
+		informationPanel.add(existingUsernames1);
+		informationPanel.add(existingUsernames2);
+		informationPanel.add(setTimerLabel);
+		informationPanel.add(secondField);
+		informationPanel.add(secondsLabel);
+		informationPanel.add(minuteField);
+		informationPanel.add(minutesLabel);
+		
+		
+		//*********** User name Border Attributes ***********//
+		
+		Box playerNameBox = Box.createVerticalBox();
+		Component nameComp = Box.createRigidArea(new Dimension(460, 200));
+		playerNameBox.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, playerNameBox, 240, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, playerNameBox, 20, SpringLayout.WEST, informationPanel);
+		informationPanel.add(playerNameBox);
+		playerNameBox.add(nameComp);
+
+		
+		Box smallSW = Box.createVerticalBox();
+		smallSW.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, smallSW, 247, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, smallSW, 13, SpringLayout.WEST, informationPanel);
+		
+		Component smallCompSW = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(smallSW);
+		smallSW.add(smallCompSW);
+		
+		
+		Box smallNW = Box.createVerticalBox();
+		smallNW.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, smallNW, 38, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, smallNW, 13, SpringLayout.WEST, informationPanel);
+		
+		Component smallCompNW = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(smallNW);
+		smallNW.add(smallCompNW);
+		
+		
+		Box smallNE = Box.createVerticalBox();
+		smallNE.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, smallNE, 38, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, smallNE, 482, SpringLayout.WEST, informationPanel);
+		
+		Component smallCompNE = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(smallNE);
+		smallNE.add(smallCompNE);
+
+		
+		Box smallSE = Box.createVerticalBox();
+		smallSE.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, smallSE, 247, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, smallSE, 482, SpringLayout.WEST, informationPanel);
+		
+		Component smallCompSE = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(smallSE);
+		smallSE.add(smallCompSE);
+		
+		
+		//***********   Timer Border Attributes   ***********//
+		
+		
+		Box timerBox = Box.createVerticalBox();
+		Component timerComp = Box.createRigidArea(new Dimension(460, 75));
+		timerBox.setBorder(new LineBorder(Color.WHITE));
+		
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, timerBox, 440, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, timerBox, 20, SpringLayout.WEST, informationPanel);
+		informationPanel.add(timerBox);
+		timerBox.add(timerComp);
+		
+
+		Box timerSW = Box.createVerticalBox();
+		timerSW.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, timerSW, 447, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, timerSW, 13, SpringLayout.WEST, informationPanel);
+		
+		Component timerCompSW = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(timerSW);
+		timerSW.add(timerCompSW);
+		
+		
+		Box timerNW = Box.createVerticalBox();
+		timerNW.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, timerNW, 363, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, timerNW, 13, SpringLayout.WEST, informationPanel);
+		
+		Component timerCompNW = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(timerNW);
+		timerNW.add(timerCompNW);
+		
+		
+		Box timerNE = Box.createVerticalBox();
+		timerNE.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, timerNE, 363, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, timerNE, 482, SpringLayout.WEST, informationPanel);
+		
+		Component timerCompNE = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(timerNE);
+		timerNE.add(timerCompNE);
+
+		
+		Box timerSE = Box.createVerticalBox();
+		timerSE.setBorder(new LineBorder(Color.WHITE));
+		
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, timerSE, 447, SpringLayout.SOUTH, navigationBarPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, timerSE, 482, SpringLayout.WEST, informationPanel);
+		
+		Component timerCompSE = Box.createRigidArea(new Dimension(5, 5));
+		informationPanel.add(timerSE);
+		timerSE.add(timerCompSE);
 
 		//************************************************// 
 		//*************   Start Game Button  *************//
@@ -1393,9 +1550,9 @@ public class QuoridorWindow extends JFrame {
 		startGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		
 		//Location Configurations
-		sl_setupPanel.putConstraint(SpringLayout.WEST, startGameButton, -498, SpringLayout.EAST, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.EAST, startGameButton, 0, SpringLayout.EAST, setupPanel);
-		sl_setupPanel.putConstraint(SpringLayout.SOUTH, startGameButton, 0, SpringLayout.SOUTH, setupPanel);
+		sl_informationPanel.putConstraint(SpringLayout.WEST, startGameButton, 0, SpringLayout.WEST, informationPanel);
+		sl_informationPanel.putConstraint(SpringLayout.EAST, startGameButton, 0, SpringLayout.EAST, informationPanel);
+		sl_informationPanel.putConstraint(SpringLayout.SOUTH, startGameButton, -10, SpringLayout.SOUTH, informationPanel);
 		
 		//Hover Action
 		startGameButton.addMouseListener(new MouseAdapter() {
@@ -1410,7 +1567,9 @@ public class QuoridorWindow extends JFrame {
 		
 		
 		//Click Action
+		
 		startGameButton.addActionListener(new ActionListener() {
+			
 			/**
 			 * <p>
 			 * Start new game button
@@ -1620,9 +1779,24 @@ public class QuoridorWindow extends JFrame {
 				Controller.initializeBoard();
 			}
 		});
-		setupPanel.add(startGameButton);
+		informationPanel.add(startGameButton);
 		
 
+		
+//**
+//****
+//**********
+//*************************--------------------------------*************************//		
+//*************************        ACTIVE GAME PANEL       *************************//
+//*************************--------------------------------*************************//			
+//**********	
+//****	
+//**
+				
+		
+		//for(int i = 0; i < 9)
+		
+		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				int curI=i, curJ=j;
@@ -1917,6 +2091,8 @@ public class QuoridorWindow extends JFrame {
 
 
 				});
+				
+				
 				GridBagConstraints c = new GridBagConstraints();
 				c.gridx = j * 2;
 				c.gridy = i * 2;
@@ -1928,6 +2104,7 @@ public class QuoridorWindow extends JFrame {
 				
 				
 				gameBoardPanel.add(tiles[i][j], c);
+				//activeGamePanel.add(tiles[i][j],c );
 
 				if (j < 8) {
 					vWalls[i][j] = Box.createVerticalBox();
