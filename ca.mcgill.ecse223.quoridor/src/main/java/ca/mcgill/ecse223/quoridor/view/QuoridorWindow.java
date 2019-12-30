@@ -363,6 +363,8 @@ public class QuoridorWindow extends JFrame {
 				
 		//activeGamePanel.setBackground(mainScreenBackgroundColor);
 		//activeGamePanel.setOpaque(true);
+		
+		
 		contentPane.add(activeGamePanel, "activeGamePanel");
 		activeGamePanel.setLayout(new BorderLayout(0, 0));
 
