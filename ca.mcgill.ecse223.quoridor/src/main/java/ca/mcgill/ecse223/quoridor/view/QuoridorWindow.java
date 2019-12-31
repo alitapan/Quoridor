@@ -364,7 +364,6 @@ public class QuoridorWindow extends JFrame {
 		//activeGamePanel.setBackground(mainScreenBackgroundColor);
 		//activeGamePanel.setOpaque(true);
 		
-		
 		contentPane.add(activeGamePanel, "activeGamePanel");
 		activeGamePanel.setLayout(new BorderLayout(0, 0));
 
@@ -410,8 +409,8 @@ public class QuoridorWindow extends JFrame {
 		
 		Box blackPlayerInfoVerticalBox = Box.createVerticalBox();
 		
-		sl_activeGameInformationPanel.putConstraint(SpringLayout.NORTH, blackPlayerInfoVerticalBox, 100, SpringLayout.SOUTH, activeGameInformationPanel);
-		sl_activeGameInformationPanel.putConstraint(SpringLayout.WEST, blackPlayerInfoVerticalBox, 30, SpringLayout.WEST, activeGameInformationPanel);
+		//sl_activeGameInformationPanel.putConstraint(SpringLayout.NORTH, blackPlayerInfoVerticalBox, 100, SpringLayout.SOUTH, activeGameInformationPanel);
+		sl_activeGameInformationPanel.putConstraint(SpringLayout.WEST, blackPlayerInfoVerticalBox, 10, SpringLayout.WEST, activeGameInformationPanel);
 		
 		activeGameInformationPanel.add(blackPlayerInfoVerticalBox);
 
@@ -455,24 +454,42 @@ public class QuoridorWindow extends JFrame {
 		blackPlayerInfoVerticalBox.add(lblTimeBlack);
 
 		
+		//newGameButton.setBackground(new Color(255, 255, 255));
+		//newGameButton.setForeground(new Color(41, 54, 63));
+		//newGameButton.setOpaque(true);
+		//newGameButton.setBorder(new LineBorder(new Color(255, 255, 255)));
+		//newGameButton.setPreferredSize(new Dimension(400, 40));
+		//newGameButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
 
 		btnGrabButtonBlack = new JButton("Grab wall");
 		btnGrabButtonBlack.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnGrabButtonBlack.setAlignmentY(Component.TOP_ALIGNMENT);
-		btnGrabButtonBlack.setFont(new Font(font, Font.PLAIN, fontSize));
-		blackPlayerInfoVerticalBox.add(btnGrabButtonBlack);
+		btnGrabButtonBlack.setBackground(new Color(255, 255, 255));
+		btnGrabButtonBlack.setForeground(new Color(41, 54, 63));
+		btnGrabButtonBlack.setOpaque(true);
+		btnGrabButtonBlack.setPreferredSize(new Dimension(400, 40));
+		btnGrabButtonBlack.setFont(new Font("Century Gothic", Font.BOLD, 10));
 		
 		btnRotateWallBlack = new JButton("Rotate Wall");
 		btnRotateWallBlack.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnRotateWallBlack.setAlignmentY(Component.TOP_ALIGNMENT);
-		btnRotateWallBlack.setFont(new Font(font, Font.PLAIN, fontSize));
+		btnRotateWallBlack.setBackground(new Color(255, 255, 255));
+		btnRotateWallBlack.setForeground(new Color(41, 54, 63));
+		btnRotateWallBlack.setOpaque(true);
+		btnRotateWallBlack.setPreferredSize(new Dimension(400, 40));
+		btnRotateWallBlack.setFont(new Font("Century Gothic", Font.BOLD, 10));
 
-		blackPlayerInfoVerticalBox.add(btnRotateWallBlack);
-		
 		btnResignGameBlack = new JButton("Forfeit Game");
 		btnResignGameBlack.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnResignGameBlack.setAlignmentY(Component.TOP_ALIGNMENT);
-		btnResignGameBlack.setFont(new Font(font, Font.PLAIN, fontSize));	
+		btnResignGameBlack.setBackground(new Color(255, 255, 255));
+		btnResignGameBlack.setForeground(new Color(41, 54, 63));
+		btnResignGameBlack.setOpaque(true);
+		btnResignGameBlack.setPreferredSize(new Dimension(400, 40));
+		btnResignGameBlack.setFont(new Font("Century Gothic", Font.BOLD, 10));
+		
+		blackPlayerInfoVerticalBox.add(btnGrabButtonBlack);
+		blackPlayerInfoVerticalBox.add(btnRotateWallBlack);
 		blackPlayerInfoVerticalBox.add(btnResignGameBlack);
 		
 		/** @author Luke Barber */
